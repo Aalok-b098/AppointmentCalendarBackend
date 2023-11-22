@@ -17,6 +17,9 @@ router.put('/update-appointment/:id', appointmentController.updateAppointment);
 // get upcoming-appointments
 router.get('/upcoming-appointment', appointmentController.getUpcomingAppointments);
 
+// 
+router.get('appointment-details/:id', appointmentController.getAppointmentDetails);
+
 // Delete an appointment
 router.delete('/delete-appointment/:id', appointmentController.deleteAppointment);
 

@@ -126,3 +126,30 @@ export const deleteAppointment = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// New controller method for appointment details by ID
+export const getAppointmentDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Validate appointment ID format
+    if (!/^[a-f\d]{24}$/i.test(id)) {
+      return res.status(400).json({ error: 'Invalid appointment ID format' });
+    }
+
+    // Retrieve appointment details by ID
+    const appointmentDetails = await Appointment.findById(id);
+    
+    if (!appointmentDetails) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    res.json({
+      success: true,
+      data: appointmentDetails,
+    });
+  } catch (error) {
+    console.error('Error getting appointment details:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

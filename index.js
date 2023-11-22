@@ -18,6 +18,10 @@ const initializeDB = async () => {
 
 initializeDB();
 
+// Routes
+import appointmentRoutes from './src/routes/appointmentRoutes.js';
+app.use('/api', appointmentRoutes);
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

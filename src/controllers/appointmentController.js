@@ -130,8 +130,7 @@ export const deleteAppointment = async (req, res) => {
 // New controller method for appointment details by ID
 export const getAppointmentDetails = async (req, res) => {
   try {
-    const { id } = req.params;
-
+    const  id  = req.params.id;
     // Validate appointment ID format
     if (!/^[a-f\d]{24}$/i.test(id)) {
       return res.status(400).json({ error: 'Invalid appointment ID format' });

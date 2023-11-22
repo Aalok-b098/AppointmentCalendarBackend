@@ -51,7 +51,7 @@ export const addAppointment = async (req, res) => {
 // Update an appointment by ID
 export const updateAppointment = async (req, res) => {
   try {
-    const  id  = req.params.id;
+    const id = req.params.id;
     const { title, start, patientName } = req.body;
 
     // Validate appointment ID format
@@ -88,6 +88,22 @@ export const updateAppointment = async (req, res) => {
     });
   } catch (error) {
     console.error('Error updating appointment:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+// New controller method for upcoming appointments
+export const getUpcomingAppointments = async (req, res) => {
+  try {
+    const currentDateTime = new Date();
+    // Retrieve upcoming appointments with start times greater than the current date and time
+    const upcomingAppointments = await Appointment.find({ start: { $gte: currentDateTime } });
+    res.json({
+      success: true,
+      data: upcomingAppointments,
+    });
+  } catch (error) {
+    console.error('Error getting upcoming appointments:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

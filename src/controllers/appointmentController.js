@@ -3,6 +3,20 @@
 // backend/controllers/appointmentController.js
 import Appointment from '../models/appointmentModel.js';
 
+// Get all appointments
+export const getAppointments = async (req, res) => {
+  try {
+    const appointments = await Appointment.find();
+    const result = {
+      success: true,
+      data: { total: appointments.length, appointments: appointments }
+    }
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 // Add a new appointment
 export const addAppointment = async (req, res) => {
   const { title, day, time, patientName } = req.body;

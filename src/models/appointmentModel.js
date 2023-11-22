@@ -17,6 +17,8 @@ const appointmentSchema = new mongoose.Schema({
   },
 });
 
+appointmentSchema.index({ start: 1 });
+
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
 export default Appointment;

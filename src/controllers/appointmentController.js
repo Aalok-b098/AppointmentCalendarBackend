@@ -18,18 +18,18 @@ export const getAppointments = async (req, res) => {
 
 // Add a new appointment
 export const addAppointment = async (req, res) => {
-  const { title, day, time, patientName } = req.body;
+  const { title, day, patientName } = req.body;
 
   try {
     // Use findOne for checking existing appointment
-    const existingAppointment = await Appointment.findOne({ day, time });
+    const existingAppointment = await Appointment.findOne({ day });
 
     if (existingAppointment) {
       return res.status(400).json({ error: 'Appointment at this time already exists.' });
     }
 
     // Create a new appointment if none exists
-    const newAppointment = new Appointment({ title, day, time, patientName });
+    const newAppointment = new Appointment({ title, day, patientName });
     await newAppointment.save();
 
     res.json({
@@ -52,7 +52,7 @@ export const addAppointment = async (req, res) => {
 export const updateAppointment = async (req, res) => {
   try {
     const  id  = req.params.id;
-    const { title, day, time, patientName } = req.body;
+    const { title, day, patientName } = req.body;
 
     // Validate appointment ID format
     if (!/^[a-f\d]{24}$/i.test(id)) {
@@ -72,10 +72,6 @@ export const updateAppointment = async (req, res) => {
 
     if (day !== undefined) {
       existingAppointment.day = day;
-    }
-
-    if (time !== undefined) {
-      existingAppointment.time = time;
     }
 
     if (patientName !== undefined) {

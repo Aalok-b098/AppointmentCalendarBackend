@@ -61,3 +61,21 @@ export const updateAppointment = async (req, res) => {
   }
 };
 
+// Delete an appointment
+export const deleteAppointment = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    // Validation: Check if the appointment exists
+    const existingAppointment = await Appointment.findById(id);
+
+    if (!existingAppointment) {
+      return res.status(404).json({ error: 'Appointment not found.' });
+    }
+    await Appointment.findByIdAndDelete(id);
+    res.json({ success: true, message: 'Your apointment deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting appointment:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

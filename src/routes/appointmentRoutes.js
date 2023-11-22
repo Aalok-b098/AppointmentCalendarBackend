@@ -14,4 +14,7 @@ router.post('/add-appointment', appointmentController.addAppointment);
 // Update an appointment
 router.post('/update-appointment', appointmentController.updateAppointment);
 
+// Delete an appointment
+router.delete('/delete-appointment/:id', appointmentController.deleteAppointment);
+
 export default router;

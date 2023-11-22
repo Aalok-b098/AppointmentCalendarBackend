@@ -95,7 +95,7 @@ export const updateAppointment = async (req, res) => {
 // New controller method for upcoming appointments
 export const getUpcomingAppointments = async (req, res) => {
   try {
-    const currentDateTime = new Date();
+    const currentDateTime = new Date().toISOString(); 
     // Retrieve upcoming appointments with start times greater than the current date and time
     const upcomingAppointments = await Appointment.find({ start: { $gte: currentDateTime } });
     res.json({

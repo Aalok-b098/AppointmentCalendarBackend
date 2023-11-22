@@ -1,13 +1,23 @@
 // index.js
-import http from 'http';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import initializeDatabase from './src/config/dbConfig.js';
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello, Node.js!');
-});
+const app = express();
+const port = 5000;
 
-const PORT = process.env.PORT || 3000;
+app.use(cors());
+app.use(bodyParser.json());
 
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Initialize the database
+const initializeDB = async () => {
+    await initializeDatabase();
+    console.log('Connected to MongoDB');
+};
+
+initializeDB();
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });

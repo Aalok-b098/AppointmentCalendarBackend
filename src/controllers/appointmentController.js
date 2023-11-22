@@ -48,3 +48,16 @@ export const addAppointment = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+// Update an appointment
+export const updateAppointment = async (req, res) => {
+  const { id, title, day, time, patientName } = req.body;
+
+  try {
+    await Appointment.findByIdAndUpdate(id, { title, day, time, patientName });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+

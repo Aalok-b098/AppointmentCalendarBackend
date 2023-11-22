@@ -11,5 +11,7 @@ router.get('/get-appointments', appointmentController.getAppointments);
 // Add a new appointment
 router.post('/add-appointment', appointmentController.addAppointment);
 
+// Update an appointment
+router.post('/update-appointment', appointmentController.updateAppointment);
 
 export default router;

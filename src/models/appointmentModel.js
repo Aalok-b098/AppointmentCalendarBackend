@@ -3,16 +3,23 @@
 import mongoose from 'mongoose';
 
 const appointmentSchema = new mongoose.Schema({
-  title: String,
-  day: String,
-  time: String,
-  patientName: String
+  title: {
+    type: String,
+    required: true,
+  },
+  day: {
+    type: Date,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
+  patientName: {
+    type: String,
+    required: true,
+  },
 });
-
-// Adding a unique compound index for day and time
-
-appointmentSchema.index({ day: 1, time: 1 }, { unique: true });
-
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 

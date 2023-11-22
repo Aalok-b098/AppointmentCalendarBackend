@@ -12,7 +12,7 @@ router.get('/get-appointments', appointmentController.getAppointments);
 router.post('/add-appointment', appointmentController.addAppointment);
 
 // Update an appointment
-router.post('/update-appointment', appointmentController.updateAppointment);
+router.put('/update-appointment/:id', appointmentController.updateAppointment);
 
 // Delete an appointment
 router.delete('/delete-appointment/:id', appointmentController.deleteAppointment);

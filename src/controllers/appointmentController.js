@@ -1,6 +1,5 @@
 // appoinmentCalendarBackend/controllers/appointmentController.js
 
-// backend/controllers/appointmentController.js
 import Appointment from '../models/appointmentModel.js';
 
 // Get all appointments
@@ -49,14 +48,50 @@ export const addAppointment = async (req, res) => {
   }
 };
 
-// Update an appointment
+// Update an appointment by ID
 export const updateAppointment = async (req, res) => {
-  const { id, title, day, time, patientName } = req.body;
-
   try {
-    await Appointment.findByIdAndUpdate(id, { title, day, time, patientName });
-    res.json({ success: true });
+    const  id  = req.params.id;
+    const { title, day, time, patientName } = req.body;
+
+    // Validate appointment ID format
+    if (!/^[a-f\d]{24}$/i.test(id)) {
+      return res.status(400).json({ error: 'Invalid appointment ID format' });
+    }
+
+    // Check if the appointment with the given ID exists
+    const existingAppointment = await Appointment.findById(id);
+    if (!existingAppointment) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    // Update appointment fields if provided
+    if (title !== undefined) {
+      existingAppointment.title = title;
+    }
+
+    if (day !== undefined) {
+      existingAppointment.day = day;
+    }
+
+    if (time !== undefined) {
+      existingAppointment.time = time;
+    }
+
+    if (patientName !== undefined) {
+      existingAppointment.patientName = patientName;
+    }
+
+    // Save the updated appointment
+    const updatedAppointment = await existingAppointment.save();
+
+    res.json({
+      success: true,
+      message: 'Appointment updated successfully',
+      data: updatedAppointment,
+    });
   } catch (error) {
+    console.error('Error updating appointment:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
